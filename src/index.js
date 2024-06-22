@@ -1,4 +1,4 @@
-const { World, Engine, Runner, Render, Bodies} = Matter;
+const { World, Engine, Runner, Render, Bodies, MouseConstraint, Mouse } = Matter;
 
 const engine = Engine.create();
 const { world } = engine;
@@ -12,8 +12,12 @@ const render = Render.create({
   }
 });
 
-Render.run(render)
-Runner.run(Runner.create(), engine)
+Render.run(render);
+Runner.run(Runner.create(), engine);
+
+World.add(world, MouseConstraint.create(engine, {
+  mouse: Mouse.create(render.canvas)
+}))
 
 // Walls
 const walls = [
@@ -23,4 +27,12 @@ const walls = [
   Bodies.rectangle(800, 300, 40, 600, { isStatic: true}),
 ];
 
-World.add(world, walls)
+World.add(world, walls);
+
+World.add(world, Bodies.rectangle(200, 200, 50, 50))
+World.add(world, Bodies.rectangle(500, 400, 50, 50))
+World.add(world, Bodies.rectangle(300, 80, 50, 50))
+World.add(world, Bodies.rectangle(223, 94, 50, 50))
+World.add(world, Bodies.rectangle(500, 96, 50, 50))
+World.add(world, Bodies.rectangle(400, 200, 50, 50))
+World.add(world, Bodies.rectangle(500, 100, 50, 50))
