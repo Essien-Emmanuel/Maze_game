@@ -1,10 +1,10 @@
-const { World, Engine, Runner, Render, Bodies, Body } = Matter;
+const { World, Engine, Runner, Render, Bodies, Body, Events } = Matter;
 
 const engine = Engine.create();
 const { world } = engine;
 engine.world.gravity.y = 0; //disable gravity in the y direction in the world
 
-const cells = 15;
+const cells = 3;
 const width = 600;
 const height = 600;
 const halfWidth = width / 2;
@@ -170,8 +170,8 @@ const goalWidth = unitLength * 0.7;
 const goalHeight = unitLength * 0.7;
 
 const goal = Bodies.rectangle(x, y, goalWidth, goalHeight, {
+  label: 'goal',
   isStatic: true,
-  fillStyle: 'green'
 });
 
 World.add(world, goal);
@@ -179,7 +179,7 @@ World.add(world, goal);
 
 // Ball
 
-const ball = Bodies.circle(unitLength / 2, unitLength /2, unitLength / 4,);
+const ball = Bodies.circle(unitLength / 2, unitLength /2, unitLength / 4, { label: 'ball' });
 World.add(world, ball);
 
 // Key handling
@@ -199,12 +199,21 @@ document.addEventListener('keydown', event => {
     Body.setVelocity(ball, { x, y: y - 5});
   } else if (event.keyCode === 68) {
     Body.setVelocity(ball, { x: x + 5, y: y});
-    console.log('move ball right');
   } else if (event.keyCode === 83) {
     Body.setVelocity(ball, { x, y: y + 5});
-    console.log('move ball down');
   } else if (event.keyCode === 65) {
     Body.setVelocity(ball, { x: x - 5, y});
-    console.log('move ball left')
   }
 });
+
+
+// win condition
+
+Events.on(engine, 'collisionStart', event => {
+  event.pairs.forEach(collision => {
+    const labels = ['goal', 'ball'];
+    if (labels.includes(collision.bodyA.label) && labels.includes(collision.bodyB.label)) {
+      console.log('user won')
+    }
+  })
+})
