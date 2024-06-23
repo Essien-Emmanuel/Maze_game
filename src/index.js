@@ -1,9 +1,10 @@
-const { World, Engine, Runner, Render, Bodies } = Matter;
+const { World, Engine, Runner, Render, Bodies, Body } = Matter;
 
 const engine = Engine.create();
 const { world } = engine;
+engine.world.gravity.y = 0; //disable gravity in the y direction in the world
 
-const cells = 3;
+const cells = 15;
 const width = 600;
 const height = 600;
 const halfWidth = width / 2;
@@ -192,13 +193,18 @@ World.add(world, ball);
  */
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'w') {
-    console.log('move ball up');
-  } else if (event.key === 'd') {
+  const { x, y} = ball.velocity;
+  
+  if (event.keyCode === 87) {
+    Body.setVelocity(ball, { x, y: y - 5});
+  } else if (event.keyCode === 68) {
+    Body.setVelocity(ball, { x: x + 5, y: y});
     console.log('move ball right');
-  } else if (event.key === 's') {
+  } else if (event.keyCode === 83) {
+    Body.setVelocity(ball, { x, y: y + 5});
     console.log('move ball down');
-  } else if (event.key === 'a') {
+  } else if (event.keyCode === 65) {
+    Body.setVelocity(ball, { x: x - 5, y});
     console.log('move ball left')
   }
 });
