@@ -26,10 +26,10 @@ Runner.run(Runner.create(), engine);
 
 // Walls
 const walls = [
-  Bodies.rectangle(halfWidth, 0, width, 40, { isStatic: true}),
-  Bodies.rectangle(halfWidth, height, width, 40, { isStatic: true}),
-  Bodies.rectangle(0, halfHeight, 40, height, { isStatic: true}),
-  Bodies.rectangle(width, halfHeight, 40, height, { isStatic: true}),
+  Bodies.rectangle(halfWidth, 0, width, 2, { isStatic: true}),
+  Bodies.rectangle(halfWidth, height, width, 2, { isStatic: true}),
+  Bodies.rectangle(0, halfHeight, 2, height, { isStatic: true}),
+  Bodies.rectangle(width, halfHeight, 2, height, { isStatic: true}),
 ];
 
 World.add(world, walls);
@@ -158,4 +158,47 @@ verticals.forEach((row, rowIndex) => {
 
     World.add(world, wall);
   });
+});
+
+
+// Goal
+
+const x = width - (unitLength / 2);
+const y = height - (unitLength / 2);
+const goalWidth = unitLength * 0.7;
+const goalHeight = unitLength * 0.7;
+
+const goal = Bodies.rectangle(x, y, goalWidth, goalHeight, {
+  isStatic: true,
+  fillStyle: 'green'
+});
+
+World.add(world, goal);
+
+
+// Ball
+
+const ball = Bodies.circle(unitLength / 2, unitLength /2, unitLength / 4,);
+World.add(world, ball);
+
+// Key handling
+
+/**
+ *  Key codes
+ *  w - 87
+ *  d - 68
+ *  s - 83
+ *  a - 65
+ */
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'w') {
+    console.log('move ball up');
+  } else if (event.key === 'd') {
+    console.log('move ball right');
+  } else if (event.key === 's') {
+    console.log('move ball down');
+  } else if (event.key === 'a') {
+    console.log('move ball left')
+  }
 });
