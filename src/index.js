@@ -199,7 +199,7 @@ const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
 const ball = Bodies.circle(unitLengthX / 2, unitLengthY /2, ballRadius, { 
   label: 'ball',
   render: {
-    fillStyle: 'teal'
+    fillStyle: 'white'
   } 
 });
 World.add(world, ball);
@@ -238,7 +238,7 @@ Events.on(engine, 'collisionStart', event => {
     if (labels.includes(collision.bodyA.label) && labels.includes(collision.bodyB.label)) {
       // display winner div
       document.querySelector('.winner').classList.remove('hidden');
-      
+
       world.gravity.y = 1;
       world.bodies.forEach(body => {
         if (body.label === 'wall') {
